@@ -2,6 +2,7 @@
   <v-app>
     <AppStatus />
     <v-content>
+      <Home/>
       <User/>
     </v-content>
   </v-app>
@@ -9,11 +10,13 @@
 
 <script>
 import User from "./components/User"
+import Home from "./Home"
 
 export default {
   name: "App",
   components: {
-    User
+    User,
+    Home
   }
 }
 </script>

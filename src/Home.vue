@@ -1,7 +1,7 @@
 <template>
   <div>
-    <AppStatus />
     <h1>{{ homeTitle }}</h1>
+    <AppStatus />
   </div>
 </template>
 <script>

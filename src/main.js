@@ -6,10 +6,12 @@ import vuetify from './plugins/vuetify';
 import '@babel/polyfill'
 
 // 컴포넌트 전역등록
+// Vue.component(tagName, options)
 import StatusComponents from './Status.vue';
 Vue.component('AppStatus', StatusComponents);
 
 // eventBus 선언
+// eventBus.userWasEdited(new Date());
 export const eventBus = new Vue({
   methods:{
     userWasEdited(date){

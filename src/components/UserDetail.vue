@@ -2,16 +2,12 @@
   <div class="red lighten-3 pa-3">
     <h3>자세한 회원 정보를 확인합니다.</h3>
     <p>상세사항</p>
-    <!-- <p>{{ nameOfChild }}</p> -->
-    <!-- <p>{{ nameOfChild.name }}</p> -->
-    <!-- <p>{{ nameOfChild.familyName }}</p> -->
-    <!-- <p>{{ sayHello }}</p> -->
     <div>
-      <p>이름 {{ name }}</p>
-      <p>주소 {{ address }}</p>
-      <p>전화번호 {{ phone }}</p>
-      <p>반려견유무 {{ hasDogKr }}</p>
-      <p>수정일자 {{ getDateAneTime(editedDate) }}</p>
+      <p>이름 <span>{{ name }}</span></p>
+      <p>주소 <span>{{ address }}</span></p>
+      <p>전화번호 <span>{{ phone }}</span></p>
+      <p>반려견유무 <span>{{ hasDogKr }}</span></p>
+      <p>수정일자 <span>{{ getDateAneTime(editedDate) }}</span></p>
     </div>
   </div>
 </template>
@@ -36,9 +32,6 @@ export default {
   },
   props: ["name","address","phone","hasDog"],
   computed: {
-    // sayHello(){
-    //   return this.nameOfChild + '안녕하세요'
-    // },
     hasDogKr(){
       return this.hasDog === true ? '있음' : '없음';
     },
@@ -49,18 +42,13 @@ export default {
       this.editedDate = date;
     });
   },
-  methods:{
-    // getDateAneTime(date){
-    //   if( date !== null ){
-    //     let hour = date.getHours();
-    //     let minutes = date.getMinutes();
-    //     let fullDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-    //     return `${fullDate} ${hour}:${minutes}`
-    //   } else {
-    //     return null
-    //   }
-    // }
-  },
   mixins:[dateFormat]
 }
 </script>
+
+<style>
+p {
+    display: flex;
+    justify-content: space-between;
+}
+</style>

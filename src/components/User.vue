@@ -64,23 +64,12 @@ export default {
       this.name = 'hdk236p'
     },
     parents(user){
-      // user = {name, address, phone, hasDog}
       console.log('받음');
       this.name = user.name;
       this.address = user.address;
       this.phone = user.phone;
       this.hasDog = user.hasDog;
     },
-    // getDateAneTime(date){
-    //   if( date !== null ){
-    //     let hour = date.getHours();
-    //     let minutes = date.getMinutes();
-    //     let fullDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-    //     return `${fullDate} ${hour}:${minutes}`
-    //   } else {
-    //     return null
-    //   }
-    // }
   },
   mixins:[dateFormat]
 }
