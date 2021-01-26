@@ -51,6 +51,6 @@
         //eventBus.$emit("userWasEdited", new Date());
         eventBus.userWasEdited(new Date());
       }
-    }
+    },
   }
 </script>

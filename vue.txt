@@ -1,241 +1,173 @@
-npm install -g @vue/cli
-vue create test
-npm run serve
-npm install vue-router --save
-npm install bootstrap-vue bootstrap 설치 후 main.js에 등록
-router.js
-
-
-삭제
-git remote rm origin
-
-추가
-git remote add origin https://github.com/kei5693/make-repo.git
-git branch --set-upstream-to=origin/main
-git pull --allow-unrelated-histories
-git push -u origin main
-git pull origin main
-
-git pull origin main --allow-unrelated-histories
-
-router폴더 생성 index.js 생성
-
-
-
-
-
 컴포넌트 등록
 * 지역 등록
-1.컴포넌트 파일 생성 Home.vue
-2.컴포넌트를 불러올 App.vue 파일에서 등록, 선언
-import Home from "./Home"
-export default {
-  components: {
-    Home
-  }
-}
-3.<Home/>로 컴포넌트 사용
+  1.컴포넌트 파일(Home.vue) 생성 
+  2.컴포넌트를 불러올 파일(App.vue)에서
+    등록
+    import Home from "./Home"
 
-* 전역등록
-1.main.js 파일에서 등록
-import StatusComponents from './Status.vue';
-Vue.component(tagName, options) 형식으로 선언한다.
-ex) Vue.component('AppStatus', StatusComponents);
-
-부모 컴포넌트에서 자식 컴포넌트로 데이터 전달
-:nameOfChild="name"
-부모 컴포넌트의 name의 값을 nameOfChild라는 변수에 담에 자식 컴포넌트로 전달함을 의미
-자식 컴포넌트에서는 props라는 속성값에 배열로 받게 되며 data와 동일하게 this.nameOfChild로 사용할 수 있다.
-export default {
-	props:[nameOfChild]
-	전달되는 값의 데이터 타입을 전달 받아 원하는 데이터 타입이 아닌 경우 에러 발생시킬수 있다. 이 때는 객체 형태로 작성
-	nameOfChild: {
-		type: String,
-		required : true, // 부모 컴포넌트에서 값을 받지 못하면 에러 발생
-		default : 'LEGO' // 부모 컴포넌트에서 값을 받지 못할 때 기본값
-    }
-}
-데이터를 정상적으로 받았다면
-{{ nameOfChild }}로 사용할 수 있게 된다.
-부모 컴포넌트에서 name의 값이 변경 되었다면
-자식 컴포넌트의 값도 동일하게 변경 된다
-
-props의 값을 직접적으로 수정하면 해당 자식 컴포넌트에서만 유효하고
-부모 컴포넌트의 값이 변경됨에 따라 자식 컴포넌트의 값이 다시 변경될 수 있어 독립성이 없게 되므로 직접 수정하지 않고 새로운 변수에 할당해서 사용한다.
-data(){
-	return {
-	user: {},
-	}
-},
-객체 user를 선언후 v-model로 연결하고 created에서
-부모 컴포넌트에서 받은 값을 할당해서 전달 받은 값을 직접적으로 수정하지 않게 한다.
-created(){
-	this.user.name = this.name;
-	this.user.address = this.address;
-	this.user.phone = this.phone;
-	this.user.hasDog = this.hasDog;
-},
-changeUser라는 함수를 만들어서 console.log(this.user)을 출력시키면
-변경된 객체 user의 값을 확인 할 수 있다.
-this.$emit을 사용하면 부모 컴포넌트로 신호를 보낼 수 있다.
-this.$emit('신호의 이름 ', 전달 할 값) 
-this.$emit('child', this.user) - child(this.user)와 같은 의미
-
-부모 컴포넌트에서 @child="parents" 라고 선언을 하면
-child라는 신호가 오면 부모 컴포넌트에 선언 되어 있는 함수 parents를 실행 하라는 의미
-parents(user){
-	console.log('받음');
-	this.name = user.name;
-	this.address = user.address;
-	this.phone = user.phone;
-	this.hasDog = user.hasDog;
-},
-emit으로 자식 컴포넌트에서 받은 값으로 할당하면서
-자식 컴포넌트에서 부모 컴포넌트의 값을 바꾸게 된다.
-
-eventBus (형제 컴포넌트에서 형제 컴포넌트로 통신)
-- 형제 컴포넌트를 이어주는 가상의 부모 컴포넌트 역할
-
-1.main.js에 선언(전역으로 사용하도록 선언)
-export const eventBus = new Vue({
-  methods:{
-    userWasEdited(date){
-      this.$emit('userWasEdited', date);
-    }
-	data를 인자로 갖는 메소드 userWasEdited를 선언해서
-	userWasEdited와 data를 전달하는 $emit 선언
-  }
-});
-
-2.컴포넌트에서 선언, 사용
-선언
-import { eventBus } from "../main"
-사용
-eventBus.userWasEdited(new Date());
-main.js에 정의된 eventBus의 함수 userWasEdited에 new Date를 인자로 받아서 실행 시키면
-형제 컴포넌트에서 이벤트 리스너인 eventBus.$on('userWasEdited', (date)가 실행되면서
-형제 컨포넌트에서 받은 인자의 값 data를 받아서 
-this.editedDate = date를 실행하게 되면서
-값을 바꾸게 된다.
-
-3.형제 컴포넌트와의 통신
-data(){
-	return {
-		editedDate: null
-	}
-},
-created(){
-	eventBus.$on('userWasEdited', (date)=> {
-		this.editedDate = date;
-	});
-	전역으로 선언된 이벤트버스 userWasEdited
-},
-
-
-Minxin : 공통적으로 사용되는 함수를 전역 선언
-1.mixins 폴더 생성 dateFormat.js 파일 생성
-// 믹스인에서 뷰 인스턴스의 속성값(computed, data) 사용 가능하기 때문에
-별도의 선언 없이 getDateAneTime(createdAt) 함수를 실행 가능하고
-data(){
-    return {
-      mixinDate: '나는 믹스인~'
-    }
-},
-믹스인에 선언되어 있는 data는 다른 컴포넌트에서 불러 올 수 있다.
-computed:{
-	helloToMixin(){
-		return this.mixinDate + "안녕하시오"
-		실행 결과는 : 나는 믹스인~안녕하시오
-	}
-},
-
-
-
-
-export const dateFormat = {
-  // 믹스인을 사용하는 컴포넌트가 나중에 실행되므로 컴포넌트의 값이 최종값이 된다.
-  created(){
-    console.log('믹스인');
-  },
-  data(){
-    return {
-      mixinDate: '나는 믹스인~'
-    }
-  },
-  methods:{
-    getDateAneTime(date){
-      if( date !== null ){
-        let hour = date.getHours();
-        let minutes = date.getMinutes();
-        let fullDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-        return `${fullDate} ${hour}:${minutes}`
-      } else {
-        return null
+    선언
+    export default {
+      components: {
+        Home
       }
     }
-  }
-}
 
-2.컴포넌트에서 import
-import { dateFormat } from "../mixins/dateFormat"
+  3.컴포넌트 사용
+  <template>
+    <Home/>
+  </template>
 
-export default {
-  components: {
-    UserDetail,
-    UserEdit
-  },
-  data() {
-    return {
-      name: 'Hoza',
-      address: 'Seoul',
-      phone: '010-1234-5678',
-      hasDog: true,
-      createdAt : null,
+* 전역등록
+  1.main.js 파일에서 등록
+    import StatusComponents from './Status.vue';
+
+    Vue.component(tagName, options) 형식으로 선언한다.
+    ex) Vue.component('AppStatus', StatusComponents);
+
+
+
+
+
+부모 컴포넌트에서 자식 컴포넌트로 데이터 전달
+  1.변수 nameOfChild에 부모 컴포넌트의 data중 name을 담아 자식 컴포넌트로 전달
+    <UserDetail :nameOfChild="name">
+  2.자식 컴포넌트에서는 속성값 props에서 배열값으로 자신의 data와 동일하게 사용 가능
+    객체 형태로 작성하면 전달 받는 값의 데이터 타입을 명시해 지정된 데이터 타입이 아닌 경우 검사 할 수 있고
+    기본값을 정의해 줄 수 있다.
+    export default {
+      배열 props:[nameOfChild]
+      객체 nameOfChild: {
+        type: String,
+        required : true, // 값을 받지 못하면 에러 발생
+        default : 'LEGO' // 값을 받지 못할 때 기본값
+        }
     }
-  },
-  created(){
-    console.log('유저 컴포넌트');
-    this.createdAt = new Date();
-  },
-  computed:{
-    helloToMixin(){
-      return this.mixinDate + "안녕하시오"
-    }
-  },
-  methods:{
-    changeName(){
-      this.name = 'hdk236p'
+    스크립트에서는 this.nameOfChild
+    태그에서는 {{ nameOfChild }}로 사용할 수 있게 된다.
+    부모 컴포넌트에서 name의 값이 변경 되면 자식 컴포넌트의 값도 동일하게 변경 된다
+
+  3.전달 받은 props의 값을 직접적으로 수정하면 해당 자식 컴포넌트에서만 유효하고
+    부모 컴포넌트의 값이 변경되면 자식 컴포넌트의 값이 다시 변경되어 독립성이 없어져 직접 수정하지 않는다.
+    
+  4.자식 컴포넌트에서 별도의 data user를 생성 후
+    v-model에서 user와 data를 연결 한 다음
+    created에서 부모 컴포넌트에서 받은 값을 user에 할당한다.
+    이러면 부모 컴포넌트의 값을 변경하지 않으면서 data를 사용할 수 있다.
+    data(){
+      return {
+        user: {},
+      }
     },
+    created(){
+      this.user.name = this.name;
+      this.user.address = this.address;
+      this.user.phone = this.phone;
+      this.user.hasDog = this.hasDog;
+    },
+  
+  5.this.$emit을 사용하면 부모 컴포넌트로 신호를 보낼 수 있다.
+    $emit으로 부모 컴포넌트에게 값을 전달시켜서
+    전달 받은 값을 직접적으로 수정하지 않고
+    부모 컴포넌트의 data를 변경시켜서 자신의 값도 변경 하도록 한다.
+    methods:{
+      changeUser(){
+        this.$emit('child', this.user);
+      }
+    }
+    this.$emit('신호의 이름 ', 전달 할 값) 
+    this.$emit('child', this.user) : child(this.user)와 같은 의미
+
+  6.부모 컴포넌트에서 @child="parents" 라고 선언을 하면
+    child라는 신호가 오면 부모 컴포넌트에 선언 되어 있는 함수 parents를 실행 하라는 의미
     parents(user){
-      console.log('받음');
       this.name = user.name;
       this.address = user.address;
       this.phone = user.phone;
       this.hasDog = user.hasDog;
     },
-  },
-  mixins:[dateFormat]
-}
+    emit의 전달 여부에 따라
+    자식 컴포넌트에서 부모 컴포넌트의 값을 바꾸게 한다.
+
+
+
+
+
+eventBus (형제 컴포넌트를 이어주는 가상의 부모 컴포넌트 역할)
+  1.main.js에 선언(전역 사용)
+    export const eventBus = new Vue({
+      methods:{
+        userWasEdited(date){
+          this.$emit('userWasEdited', date);
+        }
+      data를 인자로 갖는 메소드 userWasEdited를 선언해서
+      userWasEdited와 data를 전달하는 $emit 선언
+      }
+    });
+
+  2.사용할 컴포넌트에서 선언, 실행
+  import { eventBus } from "../main"
+
+  3.형제 컴포넌트와의 통신
+    a 컴포넌트에서 이벤트 버스를 실행하면
+    methods:{
+      changeUser(){
+        eventBus.userWasEdited(new Date());
+      }
+    }
+    
+    이벤트 리스너 .$on을 사용해서
+    b 컴포넌트에서 a 컴포넌트의 신호를 전달 받을 수 있다.
+    data(){
+      return {
+        editedDate: null
+      }
+    },
+    created(){
+      eventBus.$on('userWasEdited', (date)=> {
+        this.editedDate = date;
+      });
+    },
 
 
 
 
 
 
+Minxin : 함수의 전역 선언
+  1.mixins 폴더 생성 dateFormat.js 파일 생성
+    뷰 인스턴스처럼 별도의 선언 없이
+    선언된 함수, data는 다른 컴포넌트에서 사용할 수 있다.
+    믹스인, 컴포넌트 순으로 실행되므로 컴포넌트의 값이 최종값이 된다.
 
+    export const dateFormat = {
+      created(){
+        console.log('믹스인');
+      },
+      data(){
+        return {
+          mixinDate: '나는 믹스인~'
+        }
+      },
+      methods:{
+        getDateAneTime(date){
+          if( date !== null ){
+            let hour = date.getHours();
+            let minutes = date.getMinutes();
+            let fullDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+            return `${fullDate} ${hour}:${minutes}`
+          } else {
+            return null
+          }
+        }
+      }
+    }
+    
+  2.컴포넌트에서 사용하기
+    import { dateFormat } from "../mixins/dateFormat"
 
+    export default {
+      mixins:[dateFormat]
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    스트립트에서는 this.getDateAneTime(new Date())
+    태그에서는 {{ getDateAneTime(new Date) }}

@@ -48,6 +48,7 @@ export default {
       phone: '010-1234-5678',
       hasDog: true,
       createdAt : null,
+      editedDate: null
     }
   },
   created(){
