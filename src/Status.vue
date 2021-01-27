@@ -7,8 +7,12 @@
 export default {
   data(){
     return {
-      title: '상태좋습니다.'
+      title: '전역 컴포넌트.'
     }
   },
 }
 </script>
+
+<style scoped>
+  h1{text-align: center;}
+</style>
