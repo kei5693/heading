@@ -16,6 +16,9 @@ export const eventBus = new Vue({
   methods:{
     userWasEdited(date){
       this.$emit('userWasEdited', date);
+    },
+    listEdit(memo, index){
+      this.$emit('listEdit', memo, index)
     }
   }
 });

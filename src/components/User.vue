@@ -76,6 +76,6 @@ export default {
 }
 </script>
 
-<style>
-.row {margin:0 !important;}
+<style scoped>
+.row.wrap {margin:0 !important;}
 </style>

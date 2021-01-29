@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import User from '../components/User.vue'
 import Game from '../views/Game.vue'
 import Todo from '../views/Todo.vue'
+import TestRouter from '../views/TestRouter.vue'
 
 Vue.use(VueRouter)
 
@@ -13,7 +14,7 @@ const routes = [
     component: User
   },
   {
-    path: '/game',
+    path: '/Game',
     name: 'Game',
     component: Game
   },
@@ -21,7 +22,13 @@ const routes = [
     path: '/Todo',
     name: 'Todo',
     component: Todo
-  }
+  },
+  {
+    path: '/TestRouter',        // /TestRouter
+    //path: '/TestRouter/:userId',  // /TestRouter/4321
+    name: 'TestRouter',
+    component: TestRouter
+  },
 ]
 
 const router = new VueRouter({
