@@ -4,7 +4,7 @@
         <AppStatus />
         <div id="nav">
           <router-link to="/">User</router-link>
-          <router-link to="/Todo">Todo</router-link>
+          <router-link to="/Todo">TodoList</router-link>
           <router-link to="/Game">Game</router-link>
           <!-- <router-link to="/TestRouter">TestRouter</router-link> -->
           <!-- 라우터와 함께 값을 전달, TestRouter/4321?group=member&category=trial -->
@@ -23,6 +23,7 @@
               */
             }"
           >TestRouter</router-link>
+          <router-link to="/TestVuex">TestVuex</router-link>
         </div>
         <!-- <div id="nav">
           <span @click="$router.push({path: '/'})">User</span>

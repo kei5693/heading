@@ -14,7 +14,7 @@ export default {
   },
   methods: {
     edit() {
-      //this.$router.push({ path: `${this.userId}/edit` }) path를 사용하면 경로에 따른 차이가 있을 수 있지만 name은 직관적이다.
+      //this.$router.push({ path: `${this.userId}/edit` }) path를 사용하면 경로에 따른 차이가 있어 직관적이지 못하며 name이 더 직관적이다.
       this.$router.push({ name: "users-edit" })
     }
   }

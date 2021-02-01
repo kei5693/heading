@@ -6,6 +6,7 @@ import Todo from '../views/Todo.vue'
 import TestRouter from '../views/TestRouter.vue'
 import UsersDetail from '../views/UsersDetail.vue'
 import UsersEdit from '../views/UsersEdit.vue'
+import TestVuex from '../views/TestVuex.vue'
 
 Vue.use(VueRouter)
 
@@ -32,16 +33,8 @@ const routes = [
     beforeEnter: (to, from, next) => {
       // router를 로드 하기 전 실행
       //console.log(from, to)
-      next()
-      // next('/')
-      // next('/User')
-      /* 조건 분기
-      if(isUserLogin === true){
-        next()
-      } else {
-        next('/')        
-      }
-      */
+      next() // next('/'), next('/User')
+      // 조건 분기 isUserLogin === true) ? next() : next('/')
     },
     component: TestRouter,
     children:[
@@ -56,6 +49,11 @@ const routes = [
         component: UsersEdit,
       },
     ]
+  },
+  {
+    path: '/TestVuex',
+    name: TestVuex,
+    component: TestVuex
   },
   {
     path: '/redirect-me',
