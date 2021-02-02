@@ -245,3 +245,33 @@ vuex : 컴포넌트의 중앙 집중식 저장소, 상태 관리 패턴 + 라이
             state.allUsers.push(payload) // state의 allUsers에 받은 인자를 추가함
           }
         },
+
+        컴포넌트에서 사용
+        import { mapMutations } from 'vuex'
+        methods: {
+          ...mapActions(['addUsers']),
+        }
+        vue 인스턴스에 선언된 함수 처럼 사용 할 수 있게 된다.
+        this.addUsers(userObj)
+
+        mutations 실행 : commit(mutation이름, 인자(payload))
+        this.$store.commit('addUsers', userObj)
+  
+  4.actions
+    state 변경 시키는건 mutations에서 mutations을 동작 시키는것을 actions에서
+      mutations의 addUsers를 실행
+        addUsers: context => {
+          context.commit('addUsers')
+        }
+      
+      context 축약 ({context})
+        addUsers: ({commit}, payload) => { // function({commit})
+          commit('addUsers', payload)
+        }
+
+      dispatch로 actions의 함수 실행
+        this.$store.dispatch('addUsers', userObj)
+
+      컴포넌트에 선언하고 사용할 때는 dispatch가 필요 없다.
+      ...mapActions(['addUsers']),
+      this.addUsers(userObj)
