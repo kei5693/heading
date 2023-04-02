@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>{{ homeTitle }}</h1>
+    <!-- AppStatus는 전역에서 선언해서 사용중 -->
     <AppStatus />
   </div>
 </template>

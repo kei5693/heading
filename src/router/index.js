@@ -34,7 +34,7 @@ const routes = [
       // router를 로드 하기 전 실행
       //console.log(from, to)
       next() // next('/'), next('/User')
-      // 조건 분기 isUserLogin === true) ? next() : next('/')
+      // 조건 분기 isUserLogin === true ? next() : next('/')
     },
     component: TestRouter,
     children:[
