@@ -384,3 +384,6 @@ vuex : 컴포넌트의 중앙 집중식 저장소, 상태 관리 패턴 + 라이
       컴포넌트에 선언하고 사용할 때는 dispatch가 필요 없다.
       ...mapActions(['addUsers']),
       this.addUsers(userObj)
+
+
+vue3 test
